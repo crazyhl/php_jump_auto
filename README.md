@@ -22,3 +22,4 @@ exec("./adb shell input swipe 100 100 100 100 " . intval($distance * 1.343));
 
 
 
+![score](https://github.com/crazyhl/php_jump_auto/blob/master/20180106_123526.jpg?raw=true)
