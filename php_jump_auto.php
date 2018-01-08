@@ -21,9 +21,9 @@ function jump_one_step()
     $screenShotName = 'screenShot.png';
     try {
         // 抽取截图，此截图方式，并不是支持全部的手机，如果不支持，那么请采用保存到 sd 卡，然后再复制出来的方案,就是下面那两行的注释
-        exec("./adb shell screencap -p > " . $screenShotName);
-//        exec("./adb shell screencap -p /sdcard/" . $screenShotName);
-//        exec("./adb pull /sdcard/" . $screenShotName . " ./" . $screenShotName);
+        // exec("./adb shell screencap -p > " . $screenShotName);
+       exec("./adb shell screencap -p /sdcard/" . $screenShotName);
+       exec("./adb pull /sdcard/" . $screenShotName . " ./" . $screenShotName);
         $image = new Imagick('./' . $screenShotName);
         // 获取图片大小
         $imageSize = $image->getImageGeometry();
@@ -160,7 +160,7 @@ function jump_one_step()
         $distance = sqrt(pow(abs($targetPosition['row'] - $rolePosition['row']), 2)
             + pow(abs($targetPosition['column'] - $rolePosition['column']), 2));
         var_dump($distance);
-        exec("./adb shell input swipe 100 100 100 100 " . intval($distance * 1.343));
+        exec("./adb shell input swipe " . intval($imageSize['width'] / 3 * 2 + random_int(-100, 100))  . " " . intval($imageSize['height'] / 3 * 2 + random_int(-100, 100))  . " " . intval($imageSize['width'] / 3 * 2 + random_int(-100, 100))  . " " . intval($imageSize['height'] / 3 * 2 + random_int(-100, 100))  . " " . intval($distance * 1.393));
     } catch (Exception $e) {
         // imagick 会抛出异常，所以再最外面拦截一下
         echo 'Exception: ', 'Code: ', $e->getCode(), ' Message: ', $e->getMessage(), PHP_EOL;
@@ -170,5 +170,5 @@ function jump_one_step()
 
 while (1) {
     jump_one_step();
-    sleep(3);
+    sleep(random_int(2, 3));
 }
